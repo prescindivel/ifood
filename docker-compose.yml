@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  frontend:
+    build: ./frontend/
+    container_name: ifood-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - network
+    depends_on:
+      - mongo
+      - backend
+
+  backend:
+    build: ./backend/
+    container_name: ifood-backend
+    ports:
+      - "3333:3333"
+    networks:
+      - network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: ifood-mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
